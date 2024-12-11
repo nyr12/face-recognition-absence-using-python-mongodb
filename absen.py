@@ -27,6 +27,11 @@ def add_data_to_db(name, student_id, class_name, image_path):
     }
     collection.insert_one(student_data)
 
+# Fungsi untuk membersihkan label kamera
+def clear_camera_label():
+    label_camera.config(image='')
+    label_camera.img = None
+
 # Fungsi untuk registrasi wajah
 def register_face():
     name = entry_name.get()
@@ -65,6 +70,7 @@ def register_face():
 
 # Fungsi untuk mengenali wajah
 def recognize_face():
+    clear_camera_label()
     camera = cv2.VideoCapture(0)
     ret, frame = camera.read()
     camera.release()
@@ -101,6 +107,9 @@ def recognize_face():
             return
 
     message_label.config(text="Wajah tidak dikenali!", fg="red")
+
+def close_image():
+    clear_camera_label()
 
 # Buat GUI
 root = tk.Tk()
